@@ -34,6 +34,7 @@ var
 	sitemap			= require('metalsmith-mapsite'),
 	rssfeed			= require('metalsmith-feed'),
 	assets			= require('metalsmith-assets'),
+	debugPatch  = require('metalsmith-debug-ui').patch,
 	htmlmin			= devBuild ? null : require('metalsmith-html-minifier'),
 	browsersync	= devBuild ? require('metalsmith-browser-sync') : null,
 
@@ -64,6 +65,10 @@ var
 console.log((devBuild ? 'Development' : 'Production'), 'build, version', pkg.version);
 
 var ms = metalsmith(dir.base)
+
+debugPatch(ms)
+
+ms
 	.clean(!devBuild)												// clean folder before a production build
 	.source(dir.source + 'html/')						// source folder (src/html/)
 	.destination(dir.dest)									// build folder (build/)
